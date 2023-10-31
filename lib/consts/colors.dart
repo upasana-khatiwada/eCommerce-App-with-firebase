@@ -22,3 +22,4 @@ const Color bold = Color(0xFF89CFF0);
 const Color royalBlue = Color(0xFFB0C4DE);
 const Color favblue = Color.fromARGB(250,126,140,186);
 const Color bermudaGrey = Color.fromARGB(255, 94, 114, 165);
+

@@ -28,3 +28,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+// firebase_core: ^2.20.0
+//   firebase_auth: ^4.12.0
+//   firebase_storage: ^11.4.0
+//   cloud_firestore: ^4.12.1

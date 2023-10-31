@@ -1,6 +1,8 @@
 import 'package:ecommerce_app_with_firebase/common_widgets/app_logo.dart';
 import 'package:ecommerce_app_with_firebase/common_widgets/custom_text_fields.dart';
+import 'package:ecommerce_app_with_firebase/common_widgets/my_button.dart';
 import 'package:ecommerce_app_with_firebase/consts/colors.dart';
+import 'package:ecommerce_app_with_firebase/consts/lists.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -13,6 +15,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
+          //above section of logo
           SliverAppBar(
             backgroundColor: bermudaGrey,
             floating: true,
@@ -30,7 +33,7 @@ class LoginScreen extends StatelessWidget {
 
                       child: "Log in to $appname"
                           .text
-                          .fontFamily("sans_bold")
+                          .fontFamily(fontBold)
                           .white
                           .size(22)
                           .make(),
@@ -41,6 +44,7 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
           ),
+          //below content section
           SliverToBoxAdapter(
             child: Container(
                 color: whiteColor,
@@ -52,8 +56,59 @@ class LoginScreen extends StatelessWidget {
                     //(context.screenHeight*0.1).heightBox;
                     Container(
                       child: Column(children: [
-                        customTextField(hint: emailHint,title: email,isPass: false),
-                        customTextField(hint: passwordHint, title : password,isPass: true),
+                        //email and password feild
+                        customTextField(
+                            hint: emailHint, title: email, isPass: false),
+                        customTextField(
+                            hint: passwordHint, title: password, isPass: true),
+
+                        //forget password
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                              onPressed: () {},
+                              child: forgetPassword.text.make()),
+                        ),
+                        5.heightBox,
+                        // myButton().box.width(context.screenWidth -50).make(),
+                        //login button
+                        myButton(
+                          onPress: () {},
+                          color: bermudaGrey,
+                          textColor: whiteColor,
+                          title: login,
+                        ).box.width(context.screenWidth - 50).make(),
+                        5.heightBox,
+                        //text for create new account
+                        createNewAccount.text.color(fontGrey).make(),
+                        5.heightBox,
+                        //sign up button
+                        myButton(
+                          onPress: () {},
+                          color: royalBlue,
+                          textColor: bermudaGrey,
+                          title: signup,
+                        ).box.width(context.screenWidth - 50).make(),
+                        10.heightBox,
+                        //login with text
+                        loginWith.text.color(fontGrey).make(),
+                        5.heightBox,
+                        //to display three icons facebook,google,twitter
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(
+                                3,
+                                (index) => Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CircleAvatar(
+                                        backgroundColor: lightGrey,
+                                        radius: 25,
+                                        child: Image.asset(
+                                          socialIconList[index],
+                                          width: 30,
+                                        ),
+                                      ),
+                                    )))
                       ])
                           .box
                           .color(const Color.fromARGB(255, 244, 244, 244))
