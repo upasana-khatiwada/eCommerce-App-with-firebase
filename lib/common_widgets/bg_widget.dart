@@ -77,3 +77,45 @@
 //     );
 
 // }
+
+
+
+//sign up screen
+// Positioned(
+          //   bottom: 0,
+          //   left: 0,
+          //   right: 0,
+          //   child: Container(
+          //     color: Colors.white,
+          //     height: context.screenHeight * 0.65,
+          //     child: Center(
+          //       child: Column(
+          //         children: [
+          //           customTextField(hint: nameHint, title: name, isPass: false),
+          //           customTextField(
+          //               hint: emailHint, title: email, isPass: false),
+          //           customTextField(
+          //               hint: passwordHint, title: password, isPass: true),
+          //           customTextField(
+          //               hint: passwordHint,
+          //               title: retypePassword,
+          //               isPass: true),
+          //           Align(
+          //             alignment: Alignment.centerRight,
+          //             child: TextButton(
+          //               onPressed: () {},
+          //               child: forgetPassword.text.make(),
+          //             ),
+          //           ),
+          //         ],
+          //       )
+          //           .box
+          //           .white
+          //           .rounded
+          //           .padding(const EdgeInsets.all(16))
+          //           .width(context.screenWidth - 70)
+          //           .shadowSm
+          //           .make(),
+          //     ),
+          //   ),
+          // ),

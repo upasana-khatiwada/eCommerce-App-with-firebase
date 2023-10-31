@@ -4,7 +4,10 @@ import 'package:ecommerce_app_with_firebase/common_widgets/my_button.dart';
 import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/lists.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
+import 'package:ecommerce_app_with_firebase/views/auth_screen/signup_screen.dart';
+import 'package:ecommerce_app_with_firebase/views/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -13,6 +16,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: CustomScrollView(
         slivers: [
           //above section of logo
@@ -73,7 +77,9 @@ class LoginScreen extends StatelessWidget {
                         // myButton().box.width(context.screenWidth -50).make(),
                         //login button
                         myButton(
-                          onPress: () {},
+                          onPress: () {
+                            Get.to(()=> const HomeScreen());
+                          },
                           color: bermudaGrey,
                           textColor: whiteColor,
                           title: login,
@@ -84,7 +90,10 @@ class LoginScreen extends StatelessWidget {
                         5.heightBox,
                         //sign up button
                         myButton(
-                          onPress: () {},
+                          onPress: () {
+                            //to go to the signup page we are using getX
+                            Get.to(() => const SignUpScreen());
+                          },
                           color: royalBlue,
                           textColor: bermudaGrey,
                           title: signup,
@@ -115,10 +124,12 @@ class LoginScreen extends StatelessWidget {
                           .rounded
                           .padding(const EdgeInsets.all(16))
                           .width(context.screenWidth - 70)
+                          .shadowSm
                           .make(),
                     )
                   ],
-                )),
+                )
+                ),
           )
         ],
       ),
