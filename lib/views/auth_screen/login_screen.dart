@@ -5,7 +5,7 @@ import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/lists.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
 import 'package:ecommerce_app_with_firebase/views/auth_screen/signup_screen.dart';
-import 'package:ecommerce_app_with_firebase/views/home_screen/home_screen.dart';
+import 'package:ecommerce_app_with_firebase/views/home_screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -78,7 +78,7 @@ class LoginScreen extends StatelessWidget {
                         //login button
                         myButton(
                           onPress: () {
-                            Get.to(()=> const HomeScreen());
+                            Get.to(()=> const Home());
                           },
                           color: bermudaGrey,
                           textColor: whiteColor,
