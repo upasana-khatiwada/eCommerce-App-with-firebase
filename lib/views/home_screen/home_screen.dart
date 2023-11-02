@@ -3,6 +3,7 @@ import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/images.dart';
 import 'package:ecommerce_app_with_firebase/consts/lists.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
+import 'package:ecommerce_app_with_firebase/views/home_screen/featured_button.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -118,12 +119,153 @@ class HomeScreen extends StatelessWidget {
                   //featured categories
 
                   Align(
-                      alignment: Alignment.centerLeft,
-                      child: featuredCategories.text
-                          .color(darkFontGrey)
-                          .size(18)
-                          .fontFamily(semibold)
-                          .make())
+                    alignment: Alignment.centerLeft,
+                    child: featuredCategories.text
+                        .color(darkFontGrey)
+                        .size(18)
+                        .fontFamily(semibold)
+                        .make(),
+                  ),
+                  20.heightBox,
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                          3,
+                          (index) => Column(
+                                children: [
+                                  featuredButton(
+                                      icon: featuredImages1[index],
+                                      title: featuredTitles1[index]),
+                                  10.heightBox,
+                                  featuredButton(
+                                      icon: featuredImages2[index],
+                                      title: featuredTitles2[index]),
+                                ],
+                              )).toList(),
+                    ),
+                  ),
+
+                  //feature product
+                  20.heightBox,
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: bermudaGrey,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        featuredProduct.text.white
+                            .fontFamily(fontBold)
+                            .size(18)
+                            .make(),
+                        10.heightBox,
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: List.generate(
+                                6,
+                                (index) => Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Image.asset(
+                                          imgP1,
+                                          width: 150,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        10.heightBox,
+                                        "Laptop 4gb/64"
+                                            .text
+                                            .fontFamily(semibold)
+                                            .color(darkFontGrey)
+                                            .make(),
+                                        10.heightBox,
+                                        "\$600"
+                                            .text
+                                            .color(bermudaGrey)
+                                            .fontFamily(fontBold)
+                                            .size(16)
+                                            .make(),
+                                      ],
+                                    )
+                                        .box
+                                        .white
+                                        .margin(const EdgeInsets.symmetric(
+                                            horizontal: 5))
+                                        .roundedSM
+                                        .padding(const EdgeInsets.all(8))
+                                        .make()),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  //third swiper
+                  20.heightBox,
+                  VxSwiper.builder(
+                      aspectRatio: 16 / 9,
+                      autoPlay: true,
+                      enlargeCenterPage: true,
+                      itemCount: secondslidersList.length,
+                      itemBuilder: (context, index) {
+                        return Image.asset(
+                          secondslidersList[index],
+                          fit: BoxFit.fill,
+                        )
+                            .box
+                            .rounded
+                            .clip(Clip.antiAlias)
+                            .margin(const EdgeInsets.symmetric(horizontal: 8))
+                            .make();
+                      }),
+
+                  //all products section
+                  20.heightBox,
+                  GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: 6,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 8,
+                              crossAxisSpacing: 8,
+                              mainAxisExtent: 300),
+                      itemBuilder: (context, index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              imgP5,
+                              height: 200,
+                              width: 200,
+                              fit: BoxFit.cover,
+                            ),
+                            const Spacer(),
+                            "Laptop 4gb/64"
+                                .text
+                                .fontFamily(semibold)
+                                .color(darkFontGrey)
+                                .make(),
+                            10.heightBox,
+                            "\$600"
+                                .text
+                                .color(bermudaGrey)
+                                .fontFamily(fontBold)
+                                .size(16)
+                                .make(),
+                          ],
+                        )
+                            .box
+                            .white
+                            .margin(const EdgeInsets.symmetric(horizontal: 5))
+                            .roundedSM
+                            .padding(const EdgeInsets.all(12))
+                            .make();
+                      })
                 ],
               ),
             ),
