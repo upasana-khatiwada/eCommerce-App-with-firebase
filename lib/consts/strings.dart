@@ -28,6 +28,16 @@ womenDress = "Women Dress",
     featuredProduct = "Featured Products",
         featuredCategories = "Featured Categories";
 
+ //category strings
+ const womenClothing = "Women Clothing",
+    menClothingFashion = "Men Clothing & Fashion",
+    compAccess = "Computer & Accessories",
+    automobile = "Automobile",
+    kidtoys = "Kids & Toys",
+    sports = "Sports",
+    cosmetic = "Cosmetic",
+    cellphone = "Cellphone & Tab",
+    furniture = "Furniture";
 
 
 
