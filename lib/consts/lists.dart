@@ -17,5 +17,5 @@ const categoreisList = [
   womenDress, menClothingFashion, compAccess, automobile, kidtoys, sports, cosmetic,cellphone, furniture
 ];
 const categoriesImages = [
-   imgFc1, imgFc2, imgFc3, imgFc4, imgFc5, imgFc7, imgFc6, imgFc9,imgFc8
+   imgFc0, imgFc1, imgFc2, imgFc3, imgFc4, imgFc5, imgFc7, imgFc6, imgFc9
 ];

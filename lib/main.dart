@@ -1,3 +1,4 @@
+import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
 import 'package:ecommerce_app_with_firebase/views/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.transparent,
         appBarTheme: const AppBarTheme(
+          //to save app bar icons every color to darkFontGrey by default
+          iconTheme: IconThemeData(color: darkFontGrey),
           backgroundColor: Colors.transparent,
         ),
         fontFamily: "sans_regular",
