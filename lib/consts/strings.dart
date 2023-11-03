@@ -39,7 +39,13 @@ womenDress = "Women Dress",
     cellphone = "Cellphone & Tab",
     furniture = "Furniture";
 
-
+//item details
+ const video = "Video",
+     reviews = "Reviews",
+     sellerpolicy = "Seller Policy",
+     returnpolicy = "Return Policy",
+     supplypolicy = "Supply Policy",
+    productsyoumaylike = "Products you may also like";
 
 //styles
 const regular = "sans_regular";

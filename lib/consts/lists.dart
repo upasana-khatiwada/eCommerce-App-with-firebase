@@ -19,3 +19,5 @@ const categoreisList = [
 const categoriesImages = [
    imgFc0, imgFc1, imgFc2, imgFc3, imgFc4, imgFc5, imgFc7, imgFc6, imgFc9
 ];
+
+const itemDetailButtonsList = [video, reviews, privacyPolicy, returnpolicy, supplypolicy];
