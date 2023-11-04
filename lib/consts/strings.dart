@@ -9,12 +9,15 @@ const name = "Name";
 const nameHint = "Enter your name";
 const forgetPassword ="Forget Password";
 const login = "Log In";
+ const logout = "Log Out";
 const signup = "Sign Up";
 const createNewAccount = "or, create a new account";
 const loginWith = "Log in with";
 const privacyPolicy = "Privacy Policy";
 const termAndCond = "Terms and Conditions";
 const alreadyHaveAccount = "Already have an account? ";
+ const loggedin = "Logged in successfully";
+    const loggedout = "Logged out successfully";
 
 //home strings
 const home = "Home",categories = "Categories", cart = "Cart", account = "Account";
@@ -46,6 +49,10 @@ womenDress = "Women Dress",
      returnpolicy = "Return Policy",
      supplypolicy = "Supply Policy",
     productsyoumaylike = "Products you may also like";
+
+//profile const
+ const wishlist = "My Wishlist", orders = "My Orders", message = "Messages",
+oldpass = "Old Password", newpass = "New Password";
 
 //styles
 const regular = "sans_regular";
