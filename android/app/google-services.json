@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "472678059764",
+    "project_id": "ecommerce-app-8a417",
+    "storage_bucket": "ecommerce-app-8a417.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472678059764:android:7a387bea99f18f2ba458a1",
+        "android_client_info": {
+          "package_name": "com.example.ecommerce_app_with_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqtgUhdp5fQD36epHQlfRtajg8zJ5LAig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

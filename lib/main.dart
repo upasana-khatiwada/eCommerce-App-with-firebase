@@ -1,10 +1,13 @@
 import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
 import 'package:ecommerce_app_with_firebase/views/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async{
+   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -33,7 +36,3 @@ class MyApp extends StatelessWidget {
 }
 
 
-// firebase_core: ^2.20.0
-//   firebase_auth: ^4.12.0
-//   firebase_storage: ^11.4.0
-//   cloud_firestore: ^4.12.1
