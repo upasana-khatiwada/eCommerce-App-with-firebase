@@ -10,9 +10,9 @@ import 'package:velocity_x/velocity_x.dart';
 class CategoryDetails extends StatelessWidget {
   final String? title;
   const CategoryDetails({
-    Key? key,
+    super.key,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

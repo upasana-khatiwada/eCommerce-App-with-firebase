@@ -4,6 +4,7 @@ import 'package:ecommerce_app_with_firebase/common_widgets/my_button.dart';
 import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/lists.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
+import 'package:ecommerce_app_with_firebase/controllers/auth_controller.dart';
 import 'package:ecommerce_app_with_firebase/views/auth_screen/signup_screen.dart';
 import 'package:ecommerce_app_with_firebase/views/home_screen/home.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(AuthController());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: CustomScrollView(
@@ -62,9 +64,15 @@ class LoginScreen extends StatelessWidget {
                       child: Column(children: [
                         //email and password feild
                         customTextField(
-                            hint: emailHint, title: email, isPass: false),
+                            hint: emailHint,
+                            title: email,
+                            isPass: false,
+                            controller: controller.emailController),
                         customTextField(
-                            hint: passwordHint, title: password, isPass: true),
+                            hint: passwordHint,
+                            title: password,
+                            isPass: true,
+                            controller: controller.passwordController),
 
                         //forget password
                         Align(
@@ -77,8 +85,17 @@ class LoginScreen extends StatelessWidget {
                         // myButton().box.width(context.screenWidth -50).make(),
                         //login button
                         myButton(
-                          onPress: () {
-                            Get.to(()=> const Home());
+                          onPress: () async {
+                            await controller
+                                .loginMethod(context: context)
+                                .then((value) {
+                              if (value != null) {
+                                VxToast.show(context, msg: loggedin);
+                                Get.offAll(() => const Home());
+                              } else {
+                               // controller.isloading(false);
+                              }
+                            });
                           },
                           color: bermudaGrey,
                           textColor: whiteColor,
@@ -128,8 +145,7 @@ class LoginScreen extends StatelessWidget {
                           .make(),
                     )
                   ],
-                )
-                ),
+                )),
           )
         ],
       ),

@@ -22,7 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool? isCheck = false;
   var controller = Get.put(AuthController());
 
-  //text controller
+  // textField controllers
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -46,141 +46,124 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   .white
                   .size(18)
                   .make(),
-              15.heightBox,
-              SingleChildScrollView(
-                child: Container(
-                  color: Colors.transparent,
-                  child: Center(
-                    child: Column(
-                      children: [
-                        customTextField(
-                            hint: nameHint,
-                            title: name,
-                            controller: nameController,
-                            isPass: false),
-                        customTextField(
-                            hint: emailHint,
-                            title: email,
-                            controller: emailController,
-                            isPass: false),
-                        customTextField(
-                            hint: passwordHint,
-                            title: password,
-                            controller: passwordController,
-                            isPass: true),
-                        customTextField(
-                            hint: passwordHint,
-                            title: retypePassword,
-                            controller: passwordRetypeController,
-                            isPass: true),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                                onPressed: () {},
-                                child: forgetPassword.text.make())),
-                        Row(
-                          children: [
-                            Checkbox(
-                              activeColor: redColor,
-                              checkColor: whiteColor,
-                              value: isCheck,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  isCheck = newValue;
-                                });
-                              },
-                            ),
-                            10.heightBox,
-                            Expanded(
-                              child: RichText(
-                                  text: const TextSpan(children: [
-                                TextSpan(
-                                    text: "I agree to the ",
-                                    style: TextStyle(
-                                      fontFamily: regular,
-                                      color: fontGrey,
-                                    )),
-                                TextSpan(
-                                    text: termAndCond,
-                                    style: TextStyle(
-                                      fontFamily: regular,
-                                      color: bermudaGrey,
-                                    )),
-                                TextSpan(
-                                    text: " & ",
-                                    style: TextStyle(
-                                      fontFamily: regular,
-                                      color: fontGrey,
-                                    )),
-                                TextSpan(
-                                    text: privacyPolicy,
-                                    style: TextStyle(
-                                      fontFamily: regular,
-                                      color: bermudaGrey,
-                                    )),
-                              ])),
-                            )
-                          ],
-                        ),
-                        5.heightBox,
-                        myButton(
-                          onPress: () async {
-                            if (isCheck != false) {
-                              try {
-                                await controller
-                                    .signupMethod(
-                                        context: context,
-                                        email: emailController.text,
-                                        password: passwordController.text)
-                                    .then((value) {
-                                  //to store the data after user is logged in
-                                  return controller.storeUserData(
-                                    name: nameController.text,
-                                    password: passwordController.text,
-                                    email: emailController.text,
-                                  );
-                                }).then((value) {
-                                  VxToast.show(context, msg: loggedin);
-                                  Get.offAll(() => const Home());
-                                });
-                              } catch (e) {
-                                auth.signOut();
-                                VxToast.show(context, msg: e.toString());
-                              }
-                            }
-                          },
-                          //we can click signup button only if the user has check the terms and conditions
-
-                          color: isCheck == true ? bermudaGrey : lightGrey,
-                          textColor: whiteColor,
-                          title: signup,
-                        ).box.width(context.screenWidth - 50).make(),
-                        10.heightBox,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            alreadyHaveAccount.text.color(fontGrey).make(),
-                            login.text
-                                .color(bermudaGrey)
-                                .fontFamily(fontBold)
-                                .make()
-                                .onTap(() {
-                              Get.back();
-                            }),
-                          ],
-                        ),
-                      ],
-                    )
-                        .box
-                        .white
-                        .rounded
-                        .padding(const EdgeInsets.all(16))
-                        .width(context.screenWidth - 70)
-                        .shadowSm
-                        .make(),
+              10.heightBox,
+              Column(
+                children: [
+                  customTextField(
+                      hint: nameHint,
+                      title: name,
+                      controller: nameController,
+                      isPass: false),
+                  customTextField(
+                      hint: emailHint,
+                      title: email,
+                      controller: emailController,
+                      isPass: false),
+                  customTextField(
+                      hint: passwordHint,
+                      title: password,
+                      controller: passwordController,
+                      isPass: true),
+                  customTextField(
+                      hint: passwordHint,
+                      title: retypePassword,
+                      controller: passwordRetypeController,
+                      isPass: true),
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                          onPressed: () {}, child: const Text(forgetPassword))),
+                  Row(
+                    children: [
+                      Checkbox(
+                          activeColor: bermudaGrey,
+                          value: isCheck,
+                          onChanged: (newValue) {
+                            setState(() {
+                              isCheck = newValue;
+                            });
+                          }),
+                      10.widthBox,
+                      Expanded(
+                        child: RichText(
+                            text: const TextSpan(children: [
+                          TextSpan(
+                              text: "I agree to the ",
+                              style: TextStyle(
+                                  fontFamily: regular, color: fontGrey)),
+                          TextSpan(
+                              text: termAndCond,
+                              style: TextStyle(
+                                  fontFamily: regular, color: bermudaGrey)),
+                          TextSpan(
+                              text: " & ",
+                              style: TextStyle(
+                                  fontFamily: regular, color: fontGrey)),
+                          TextSpan(
+                              text: privacyPolicy,
+                              style: TextStyle(
+                                  fontFamily: regular, color: bermudaGrey))
+                        ])),
+                      )
+                    ],
                   ),
-                ),
-              ),
+                  5.heightBox,
+                  // controller.isloading.value
+                  //     ? const CircularProgressIndicator(
+                  //         valueColor: AlwaysStoppedAnimation(redColor),
+                  //       )
+                  //     :
+                  myButton(
+                      color: isCheck == true ? bermudaGrey : lightGrey,
+                      title: signup,
+                      textColor: whiteColor,
+                      onPress: () async {
+                        if (isCheck != false) {
+                          // controller.isloading(true);
+                          try {
+                            await controller
+                                .signupMethod(
+                                    context: context,
+                                    email: emailController.text,
+                                    password: passwordController.text)
+                                .then((value) {
+                              return controller.storeUserData(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  name: nameController.text);
+                            }).then((value) {
+                              VxToast.show(context, msg: loggedin);
+                              Get.offAll(() => const Home());
+                            });
+                          } catch (e) {
+                            auth.signOut();
+                            //VxToast.show(context, msg: e.toString());
+                            // controller.isloading(false);
+                             print("Error during signup: $e"); // Print the error message
+                          }
+                        }
+                      }).box.width(context.screenWidth - 50).make(),
+                  10.heightBox,
+                  // wrapping into Gesture detector of velocity X
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      alreadyHaveAccount.text.color(fontGrey).make(),
+                      login.text.color(redColor).make().onTap(() {
+                        VxToast.show(context, msg: loggedin);
+                        Get.back();
+                      })
+                    ],
+                  )
+                ],
+              )
+                  .box
+                  .white
+                  .rounded
+                  .p16
+                  .width(context.screenWidth - 70)
+                  .shadowSm
+                  .make(),
             ],
           ),
         ),
@@ -188,9 +171,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     ));
   }
 }
-
-
-
 
 // return Scaffold(
 //       resizeToAvoidBottomInset: false,
@@ -299,15 +279,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 //                                       ]
 //                                   )),
 //                             ),
-              
-              
+
 //                           ],
 //                         ),
 //                         5.heightBox,
 //                         myButton(
 //                               onPress: () {},
 //                               //we can click signup button only if the user has check the terms and conditions
-      
+
 //                               color: isCheck == true ? bermudaGrey : lightGrey,
 //                               textColor: whiteColor,
 //                               title: signup,

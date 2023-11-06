@@ -23,9 +23,10 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+
 android {
     namespace "com.example.ecommerce_app_with_firebase"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -65,15 +66,11 @@ flutter {
     source '../..'
 }
 
-// dependencies {
-//    // Add Firebase BoM dependency
-//      implementation 'com.google.firebase:firebase-core:21.1.1'
-//     implementation 'com.google.firebase:firebase-analytics-ktx'
-// }
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // Add Firebase BoM dependency
-     implementation 'com.google.firebase:firebase-core:21.1.1'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+     implementation platform('com.google.firebase:firebase-bom:32.5.0')
+      implementation 'com.google.firebase:firebase-analytics'
 
 }
