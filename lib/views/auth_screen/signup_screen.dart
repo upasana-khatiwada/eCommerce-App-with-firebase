@@ -139,7 +139,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               auth.signOut();
                               //VxToast.show(context, msg: e.toString());
                               // controller.isloading(false);
-                               print("Error during signup: $e"); // Print the error message
+                               // Print the error message
                             }
                           }
                         }).box.width(context.screenWidth - 50).make(),
