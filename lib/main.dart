@@ -7,22 +7,17 @@ import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  try {
-    await Firebase.initializeApp(
-//  name: 'com.example.ecommerce_app_with_firebase',
-        // options: const FirebaseOptions(
-
-        // ),
-        );
-    // Other Firebase-related code
-  } catch (e) {
-    print('Firebase initialization error: $e');
-  }
-
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      appId: '1:127666465851:android:e8aeda543c6206af95001e',
+      apiKey: 'AIzaSyBmKh964zbsKxyCPgHqaL2Cub3Eu7kFmxU',
+      messagingSenderId: '127666465851',
+      projectId: 'ecommerce-a8996',
+      storageBucket: 'ecommerce-a8996.appspot.com',
+    ),
+  );
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
