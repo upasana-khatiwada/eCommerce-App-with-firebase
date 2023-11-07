@@ -51,101 +51,109 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
           //below content section
-          SliverToBoxAdapter(
-            child: Container(
-                color: whiteColor,
-                height: MediaQuery.of(context).size.height * 0.75,
-                child: Column(
-                  children: [
-                    30.heightBox,
+          Obx(
+            () => SliverToBoxAdapter(
+              child: Container(
+                  color: whiteColor,
+                  height: MediaQuery.of(context).size.height * 0.75,
+                  child: Column(
+                    children: [
+                      30.heightBox,
 
-                    //(context.screenHeight*0.1).heightBox;
-                    Container(
-                      child: Column(children: [
-                        //email and password feild
-                        customTextField(
-                            hint: emailHint,
-                            title: email,
-                            isPass: false,
-                            controller: controller.emailController),
-                        customTextField(
-                            hint: passwordHint,
-                            title: password,
-                            isPass: true,
-                            controller: controller.passwordController),
+                      //(context.screenHeight*0.1).heightBox;
+                      Container(
+                        child: Column(children: [
+                          //email and password feild
+                          customTextField(
+                              hint: emailHint,
+                              title: email,
+                              isPass: false,
+                              controller: controller.emailController),
+                          customTextField(
+                              hint: passwordHint,
+                              title: password,
+                              isPass: true,
+                              controller: controller.passwordController),
 
-                        //forget password
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                              onPressed: () {},
-                              child: forgetPassword.text.make()),
-                        ),
-                        5.heightBox,
-                        // myButton().box.width(context.screenWidth -50).make(),
-                        //login button
-                        myButton(
-                          onPress: () async {
-                            await controller
-                                .loginMethod(context: context)
-                                .then((value) {
-                              if (value != null) {
-                                VxToast.show(context, msg: loggedin);
-                                Get.offAll(() => const Home());
-                              } else {
-                               // controller.isloading(false);
-                              }
-                            });
-                          },
-                          color: bermudaGrey,
-                          textColor: whiteColor,
-                          title: login,
-                        ).box.width(context.screenWidth - 50).make(),
-                        5.heightBox,
-                        //text for create new account
-                        createNewAccount.text.color(fontGrey).make(),
-                        5.heightBox,
-                        //sign up button
-                        myButton(
-                          onPress: () {
-                            //to go to the signup page we are using getX
-                            Get.to(() => const SignUpScreen());
-                          },
-                          color: royalBlue,
-                          textColor: bermudaGrey,
-                          title: signup,
-                        ).box.width(context.screenWidth - 50).make(),
-                        10.heightBox,
-                        //login with text
-                        loginWith.text.color(fontGrey).make(),
-                        5.heightBox,
-                        //to display three icons facebook,google,twitter
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(
-                                3,
-                                (index) => Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: CircleAvatar(
-                                        backgroundColor: lightGrey,
-                                        radius: 25,
-                                        child: Image.asset(
-                                          socialIconList[index],
-                                          width: 30,
+                          //forget password
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                                onPressed: () {},
+                                child: forgetPassword.text.make()),
+                          ),
+                          5.heightBox,
+                          // myButton().box.width(context.screenWidth -50).make(),
+                          //login button
+                          controller.isloading.value
+                              ? const CircularProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation(bermudaGrey),
+                                )
+                              : myButton(
+                                  onPress: () async {
+                                    controller.isloading(true);
+                                    await controller
+                                        .loginMethod(context: context)
+                                        .then((value) {
+                                      if (value != null) {
+                                        VxToast.show(context, msg: loggedin);
+                                        Get.offAll(() => const Home());
+                                      } else {
+                                        controller.isloading(false);
+                                      }
+                                    });
+                                  },
+                                  color: bermudaGrey,
+                                  textColor: whiteColor,
+                                  title: login,
+                                ).box.width(context.screenWidth - 50).make(),
+                          5.heightBox,
+                          //text for create new account
+                          createNewAccount.text.color(fontGrey).make(),
+                          5.heightBox,
+                          //sign up button
+                          myButton(
+                            onPress: () {
+                              //to go to the signup page we are using getX
+                              Get.to(() => const SignUpScreen());
+                            },
+                            color: royalBlue,
+                            textColor: bermudaGrey,
+                            title: signup,
+                          ).box.width(context.screenWidth - 50).make(),
+                          10.heightBox,
+                          //login with text
+                          loginWith.text.color(fontGrey).make(),
+                          5.heightBox,
+                          //to display three icons facebook,google,twitter
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: List.generate(
+                                  3,
+                                  (index) => Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: CircleAvatar(
+                                          backgroundColor: lightGrey,
+                                          radius: 25,
+                                          child: Image.asset(
+                                            socialIconList[index],
+                                            width: 30,
+                                          ),
                                         ),
-                                      ),
-                                    )))
-                      ])
-                          .box
-                          .color(const Color.fromARGB(255, 244, 244, 244))
-                          .rounded
-                          .padding(const EdgeInsets.all(16))
-                          .width(context.screenWidth - 70)
-                          .shadowSm
-                          .make(),
-                    )
-                  ],
-                )),
+                                      )))
+                        ])
+                            .box
+                            .color(const Color.fromARGB(255, 244, 244, 244))
+                            .rounded
+                            .padding(const EdgeInsets.all(16))
+                            .width(context.screenWidth - 70)
+                            .shadowSm
+                            .make(),
+                      )
+                    ],
+                  )),
+            ),
           )
         ],
       ),
