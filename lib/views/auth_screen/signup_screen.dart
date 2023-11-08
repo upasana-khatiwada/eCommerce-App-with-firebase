@@ -137,8 +137,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               });
                             } catch (e) {
                               auth.signOut();
-                              //VxToast.show(context, msg: e.toString());
-                              // controller.isloading(false);
+                              VxToast.show(context, msg: e.toString());
+                               controller.isloading(false);
                                // Print the error message
                             }
                           }
