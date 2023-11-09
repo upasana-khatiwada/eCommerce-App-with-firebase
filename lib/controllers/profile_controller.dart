@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app_with_firebase/consts/firebase_consts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,7 +33,7 @@ class ProfileController extends GetxController {
     }
   }
 
-  uplaodProfileImage() async {
+  uploadProfileImage() async {
     var filename = basename(profileImgPath.value);
     var destination = 'images/${currentUser!.uid}/$filename';
     Reference ref = FirebaseStorage.instance.ref().child(destination);
@@ -47,4 +48,16 @@ class ProfileController extends GetxController {
         SetOptions(merge: true));
     isloading(false);
   }
+   changeAuthPassword({email, password, newpassword}) async {
+        final cred = EmailAuthProvider.credential(email: email, password: password);
+
+        //to logout and login again with new password
+
+        await currentUser!.reauthenticateWithCredential(cred).then((value) {
+          currentUser!.updatePassword(newpassword);
+        }).catchError((error){
+        });
+
+   }
+
 }

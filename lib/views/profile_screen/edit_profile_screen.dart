@@ -28,27 +28,28 @@ class EditProfileScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-                // if data image url and controller path is empty
+              // if data image url and controller path is empty
 
-               data['imageUrl'] == '' &&  controller.profileImgPath.isEmpty
+              data['imageUrl'] == '' && controller.profileImgPath.isEmpty
                   ? Image.asset(imgProfile2, width: 100, fit: BoxFit.cover)
                       .box
                       .roundedFull
                       .clip(Clip.antiAlias)
                       .make()
-                      //if data is not empty but controller path is empty
-              : data['imageUrl'] != '' && controller.profileImgPath.isEmpty 
-                  ? Image.file(
-                      File(controller.profileImgPath.value),
-                      width: 100,
-                      fit: BoxFit.cover,
-                    ).box.roundedFull.clip(Clip.antiAlias).make()
+                  //if data is not empty but controller path is empty
+                  : data['imageUrl'] != '' && controller.profileImgPath.isEmpty
+                      ? Image.network(
+                          data['imageUrl'],
+                          width: 100,
+                          fit: BoxFit.cover,
+                        ).box.roundedFull.clip(Clip.antiAlias).make()
 
-                     //if both are empty
-              : Image.file(File(controller.profileImgPath.value),
-                width: 100,
-                fit: BoxFit.cover,
-                ).box.roundedFull.clip(Clip.antiAlias).make(),
+                      //if both are empty
+                      : Image.file(
+                          File(controller.profileImgPath.value),
+                          width: 100,
+                          fit: BoxFit.cover,
+                        ).box.roundedFull.clip(Clip.antiAlias).make(),
               10.heightBox,
               myButton(
                   color: bermudaGrey,
@@ -91,13 +92,34 @@ class EditProfileScreen extends StatelessWidget {
                       child: myButton(
                           color: bermudaGrey,
                           onPress: () async {
-                            await controller.uplaodProfileImage();
-                            await controller.updateProfile(
-                              imgUrl: controller.profileImageLink,
-                              name: controller.nameController.text,
-                              password: controller.newpassController.text,
-                            );
-                             VxToast.show(context, msg: "Updated");
+                            controller.isloading(true);
+
+                            //if image is not selected
+                            if (controller.profileImgPath.value.isNotEmpty) {
+                              await controller.uploadProfileImage();
+                            } else {
+                              controller.profileImageLink = data['imageUrl'];
+                            }
+
+                            //if old password matches data base
+                            if (data['password'] ==
+                                controller.oldpassController.text) {
+                              await controller.changeAuthPassword(
+                                  email: data['email'],
+                                  password: controller.oldpassController.text,
+                                  newpassword:
+                                      controller.newpassController.text);
+
+                              await controller.updateProfile(
+                                imgUrl: controller.profileImageLink,
+                                name: controller.nameController.text,
+                                password: controller.newpassController.text,
+                              );
+                              VxToast.show(context, msg: "Updated");
+                            } else {
+                              VxToast.show(context, msg: "Wrong old Password");
+                              controller.isloading(false);
+                            }
                           },
                           textColor: whiteColor,
                           title: "Save")),

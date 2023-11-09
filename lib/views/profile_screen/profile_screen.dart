@@ -5,8 +5,10 @@ import 'package:ecommerce_app_with_firebase/consts/firebase_consts.dart';
 import 'package:ecommerce_app_with_firebase/consts/images.dart';
 import 'package:ecommerce_app_with_firebase/consts/lists.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
+import 'package:ecommerce_app_with_firebase/controllers/auth_controller.dart';
 import 'package:ecommerce_app_with_firebase/controllers/profile_controller.dart';
 import 'package:ecommerce_app_with_firebase/services/firestore_services.dart';
+import 'package:ecommerce_app_with_firebase/views/auth_screen/login_screen.dart';
 import 'package:ecommerce_app_with_firebase/views/profile_screen/components/details_button.dart';
 import 'package:ecommerce_app_with_firebase/views/profile_screen/edit_profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -57,44 +59,49 @@ class ProfileScreen extends StatelessWidget {
                     }),
                   ),
                   //users details section
-                  Row(
-                    children: [
-                      data['imageUrl'] == ''
-                          ? Image.asset(imgProfile2,
-                                  width: 100, fit: BoxFit.cover)
-                              .box
-                              .roundedFull
-                              .clip(Clip.antiAlias)
-                              .make()
-                          : Image.network(data['imageUrl'],
-                                  width: 100, fit: BoxFit.cover)
-                              .box
-                              .roundedFull
-                              .clip(Clip.antiAlias)
-                              .make(),
-                      10.widthBox,
-                      Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          "${data['name']}"
-                              .text
-                              .fontFamily(semibold)
-                              .white
-                              .make(),
-                          "${data['email']}".text.white.make(),
-                        ],
-                      )),
-                      10.heightBox,
-                      OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                            side: const BorderSide(
-                          color: whiteColor,
+                  Padding(
+ padding: const EdgeInsets.only(left: 10,right: 10),                    child: Row(
+                      children: [
+                        data['imageUrl'] == ''
+                            ? Image.asset(imgProfile2,
+                                    width: 100, fit: BoxFit.cover)
+                                .box
+                                .roundedFull
+                                .clip(Clip.antiAlias)
+                                .make()
+                            : Image.network(data['imageUrl'],
+                                    width: 100, fit: BoxFit.cover)
+                                .box
+                                .roundedFull
+                                .clip(Clip.antiAlias)
+                                .make(),
+                        10.widthBox,
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            "${data['name']}"
+                                .text
+                                .fontFamily(semibold)
+                                .white
+                                .make(),
+                            "${data['email']}".text.white.make(),
+                          ],
                         )),
-                        onPressed: () {},
-                        child: logout.text.fontFamily(semibold).white.make(),
-                      )
-                    ],
+                        10.heightBox,
+                        OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                              side: const BorderSide(
+                            color: whiteColor,
+                          )),
+                          onPressed: () async{
+                              await Get.put(AuthController()).signoutMethod(context);
+                              Get.offAll(()=> const LoginScreen());
+                          },
+                          child: logout.text.fontFamily(semibold).white.make(),
+                        )
+                      ],
+                    ),
                   ),
                   // 20.heightBox,
                   Padding(
