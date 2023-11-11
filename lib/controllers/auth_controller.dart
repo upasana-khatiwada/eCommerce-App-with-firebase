@@ -43,7 +43,7 @@ class AuthController extends GetxController {
   //storing data method
   storeUserData({name, password, email}) async {
     if (currentUser != null) {
-      print("Before storeUserData");
+     // print("Before storeUserData");
       DocumentReference store =
           firestore.collection(usersCollections).doc(currentUser!.uid);
       await store.set({
@@ -56,7 +56,7 @@ class AuthController extends GetxController {
         'wishlist_count': "00",
         'order_count': "00",
       });
-      print("After storeUserData");
+      //print("After storeUserData");
     } else {
       print("currentUser is null");
     }
