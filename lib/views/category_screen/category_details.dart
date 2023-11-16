@@ -2,12 +2,13 @@ import 'package:ecommerce_app_with_firebase/common_widgets/bg_widget.dart';
 import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/images.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
+import 'package:ecommerce_app_with_firebase/controllers/product_controller.dart';
 import 'package:ecommerce_app_with_firebase/views/category_screen/items_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class CategoryDetails extends StatelessWidget {
+class CategoryDetails extends StatefulWidget {
   final String? title;
   const CategoryDetails({
     super.key,
@@ -15,11 +16,18 @@ class CategoryDetails extends StatelessWidget {
   });
 
   @override
+  State<CategoryDetails> createState() => _CategoryDetailsState();
+}
+
+class _CategoryDetailsState extends State<CategoryDetails> {
+
+    var controller = Get.find<ProductController>();
+  @override
   Widget build(BuildContext context) {
     return bgWidget(
         child: Scaffold(
       appBar: AppBar(
-        title: title!.text.fontFamily(fontBold).white.make(),
+        title: widget.title!.text.fontFamily(fontBold).white.make(),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,8 +37,8 @@ class CategoryDetails extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Row(
               children: List.generate(
-                  6,
-                  (index) => "woman's dress"
+                  controller.subcat.length,
+                  (index) => "${controller.subcat[index]}"
                       .text
                       .size(12)
                       .fontFamily(semibold)
@@ -42,7 +50,10 @@ class CategoryDetails extends StatelessWidget {
                       .size(120, 60)
                       .margin(const EdgeInsets.symmetric(horizontal: 4))
                       .make()
-                      .onTap(() {})),
+                      .onTap(() {
+
+                        
+                      })),
             ),
           ),
           20.heightBox,

@@ -1,6 +1,7 @@
 import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/lists.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
+import 'package:ecommerce_app_with_firebase/controllers/product_controller.dart';
 import 'package:ecommerce_app_with_firebase/views/category_screen/category_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     var controller = Get.put(ProductController());
     return Scaffold(
       
       resizeToAvoidBottomInset: false,
@@ -79,7 +81,7 @@ class CategoryScreen extends StatelessWidget {
                                   .make()
                             ],
                           ).box.white.rounded.clip(Clip.antiAlias).outerShadowSm.make().onTap(() { 
-                           // controller.getSubCategories(categoreisList[index]);
+                            controller.getSubCategories(categoreisList[index]);
                            Get.to(()=> CategoryDetails(title: categoreisList[index]));
                           });
                         }).box
