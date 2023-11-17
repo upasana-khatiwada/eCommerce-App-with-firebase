@@ -9,7 +9,7 @@ User? currentUser = auth.currentUser;
 
 //collections
 const usersCollections = "users";
-// const productsCollection = "products";
+const productsCollection = "products";
 // const cartCollection = 'cart';
 // const chatsCollection = 'chats';
 // const messagesCollection = 'messages';

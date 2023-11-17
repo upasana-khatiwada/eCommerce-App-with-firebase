@@ -12,9 +12,9 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
      var controller = Get.put(ProductController());
     return Scaffold(
-      
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
