@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app_with_firebase/common_widgets/bg_widget.dart';
 import 'package:ecommerce_app_with_firebase/common_widgets/loading_indicator.dart';
 import 'package:ecommerce_app_with_firebase/consts/colors.dart';
-import 'package:ecommerce_app_with_firebase/consts/images.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
 import 'package:ecommerce_app_with_firebase/controllers/product_controller.dart';
 import 'package:ecommerce_app_with_firebase/services/firestore_services.dart';
@@ -111,32 +110,62 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                       mainAxisSpacing: 8,
                                       crossAxisSpacing: 8),
                               itemBuilder: (context, index) {
-                                
+                                // Check if the fields exist before trying to access them
+                                var docData =
+                                    data[index].data() as Map<String, dynamic>;
+                                var imgUrl = docData.containsKey('p_imgs')
+                                    ? docData['p_imgs'][0]
+                                    : 'default_img_url';
+                                var productName = docData.containsKey('p_name')
+                                    ? docData['p_name']
+                                    : 'default_name';
+                                var productPrice = docData
+                                        .containsKey('p_price')
+                                    ? docData['details']['p_price'].toString()
+                                    : 'default_price';
+                                if (productPrice == 'default_price') {
+                                  print(
+                                      'Warning: p_price is not present or is null.');
+                                }
+
+                                print("productName: $productName");
+                                print("productPrice: $productPrice");
+                                print("docData: $docData");
+
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    
                                     Image.network(
-                                      data[index]['p_imgs'][0],
+                                      imgUrl,
+                                      // data[index]['p_imgs'][0],
                                       height: 150,
                                       width: 200,
                                       fit: BoxFit.cover,
                                     ),
                                     // Image.asset(imgP5,height: 160,width: 200,fit: BoxFit.cover,).box.roundedSM.clip(Clip.antiAlias).make(),
                                     5.heightBox, //.box.roundedSM.clip(Clip.antiAlias).make(),
-                                    "${data[index]['p_name']}"
-                                        .text
-                                        .fontFamily(semibold)
-                                        .color(darkFontGrey)
-                                        .make(),
+                                    // "${data[index]['p_name']}"
+                                    Text(
+                                      productName,
+                                      style: const TextStyle(
+                                          fontFamily: semibold,
+                                          color: darkFontGrey),
+                                    ),
                                     10.heightBox,
-                                    "${data[index]['p_price']}"
-                                        .numCurrency
-                                        .text
-                                        .color(redColor)
-                                        .fontFamily(fontBold)
-                                        .size(16)
-                                        .make(),
+                                    // "${data[index]['p_price']}"
+                                    // productPrice.numCurrency.text
+                                    //     .color(redColor)
+                                    //     .fontFamily(fontBold)
+                                    //     .size(16)
+                                    //     .make(),
+                                    Text(
+                                      productPrice,
+                                      style: const TextStyle(
+                                          color: bermudaGrey,
+                                          fontFamily: fontBold,
+                                          fontSize: 16),
+                                    ),
+
                                     10.heightBox,
                                   ],
                                 )
@@ -152,9 +181,8 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                     .onTap(() {
                                   // controller.checkIfFav(data[index]);
                                   Get.to(() => ItemDetails(
-                                        title: "${data[index]['p_name']}",
-                                        //  data: data[index]
-                                      ));
+                                      title: "${data[index]['p_name']}",
+                                      data: data[index]));
                                 });
                               }));
                     }

@@ -8,7 +8,8 @@ import 'package:velocity_x/velocity_x.dart';
 
 class ItemDetails extends StatelessWidget {
   final String? title;
-  const ItemDetails({super.key, required this.title});
+  final dynamic data;
+  const ItemDetails({super.key, required this.title, required this.data});
 
   @override
   Widget build(BuildContext context) {
