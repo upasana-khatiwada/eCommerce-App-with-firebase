@@ -128,16 +128,16 @@ class _CategoryDetailsState extends State<CategoryDetails> {
 
 // Check if productPrice is null or not present
                                 if (productPrice == null) {
-                                  print('Warning: p_price is null.');
+                                 // print('Warning: p_price is null.');
                                   productPrice = 'default_price';
                                 } else {
                                   productPrice = productPrice.toString();
                                 }
-                                  print(Colors.white70.value);
-
-                                print("final productPrice: $productPrice");
-                                print(
-                                    "docData['p_price'] runtime type: ${docData['p_price'].runtimeType}");
+                                // print(Colors.white70.value);
+                                //for debugging if necessary print
+                                // print("final productPrice: $productPrice");
+                                // print(
+                                //     "docData['p_price'] runtime type: ${docData['p_price'].runtimeType}");
 
                                 // if (productPrice == 'default_price') {
                                 //   print(
@@ -146,7 +146,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
 
                                 // print("productName: $productName");
                                 // print("productPrice: $productPrice");
-                                print("docData: $docData");
+                                //  print("docData: $docData");
 
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

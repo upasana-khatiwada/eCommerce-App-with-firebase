@@ -56,4 +56,10 @@ class ProductController extends GetxController {
       VxToast.show(context, msg: error.toString());
     });
   }
+   resetValues(){
+    totalPrice.value = 0;
+    quantity.value = 0;
+    colorIndex.value = 0;
+  }
+
 }
