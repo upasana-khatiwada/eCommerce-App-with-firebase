@@ -3,7 +3,9 @@ import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/images.dart';
 import 'package:ecommerce_app_with_firebase/consts/lists.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
+import 'package:ecommerce_app_with_firebase/controllers/product_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ItemDetails extends StatelessWidget {
@@ -13,11 +15,14 @@ class ItemDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<ProductController>();
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
           icon: const Icon(Icons.arrow_back),
         ),
         title: title!.text.color(darkFontGrey).fontFamily(fontBold).make(),
@@ -38,14 +43,14 @@ class ItemDetails extends StatelessWidget {
                       children: [
                         //swiper section
                         VxSwiper.builder(
-                            itemCount: 3,
+                            itemCount: data['p_imgs'].length,
                             autoPlay: true,
                             height: 350,
                             aspectRatio: 16 / 9,
                             viewportFraction: 1.0,
                             itemBuilder: (context, index) {
-                              return Image.asset(
-                                imgFc5,
+                              return Image.network(
+                                data['p_imgs'][index],
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                               );
@@ -61,15 +66,17 @@ class ItemDetails extends StatelessWidget {
                         //rating
                         VxRating(
                           //isSelectable: false,
+                          value: double.parse(data['p_ratings']),
                           onRatingUpdate: (value) {},
                           normalColor: textfieldGrey,
                           selectionColor: golden,
                           count: 5,
                           size: 25,
-                          // maxRating: 5,
+                          maxRating: 5,
                         ),
                         10.heightBox,
-                        "\$30,000"
+                        "${data['p_price']}"
+                            .numCurrency
                             .text
                             .fontFamily(semibold)
                             .color(bermudaGrey)
@@ -85,7 +92,7 @@ class ItemDetails extends StatelessWidget {
                               children: [
                                 "Seller".text.black.fontFamily(semibold).make(),
                                 5.heightBox,
-                                "In Mouse brand"
+                                "${data['p_seller']}"
                                     .text
                                     .fontFamily(semibold)
                                     .color(darkFontGrey)
@@ -109,81 +116,114 @@ class ItemDetails extends StatelessWidget {
 
                         //Color Section
                         20.heightBox,
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 100,
-                                  child: "Color: "
-                                      .text
-                                      .color(textfieldGrey)
-                                      .make(),
-                                ),
-                                Row(
-                                  children: List.generate(
-                                      3,
-                                      (index) => VxBox()
-                                          .size(40, 40)
-                                          .roundedFull
-                                          .color(Vx.randomPrimaryColor)
-                                          .margin(const EdgeInsets.symmetric(
-                                              horizontal: 4))
-                                          .make()),
-                                ),
-                              ],
-                            ).box.padding(const EdgeInsets.all(8)).make(),
-                            //quantity row
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 100,
-                                  child: "Quantity:"
-                                      .text
-                                      .color(textfieldGrey)
-                                      .make(),
-                                ),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(Icons.remove)),
-                                    "0"
+                        Obx(
+                          () => Column(
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 100,
+                                    child: "Color: "
                                         .text
-                                        .size(16)
                                         .color(darkFontGrey)
-                                        .fontFamily(fontBold)
                                         .make(),
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(Icons.add)),
-                                    10.widthBox,
-                                    "(0 available)"
+                                  ),
+                                  Row(
+                                    children: List.generate(
+                                        data['p_colors'].length,
+                                        (index) => Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                VxBox()
+                                                    .size(40, 40)
+                                                    .roundedFull
+                                                    .color(Color(int.parse(
+                                                            data['p_colors']
+                                                                [index]))
+                                                        .withOpacity(1.0))
+                                                    .margin(const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 4))
+                                                    .make()
+                                                    .onTap(() {
+                                                  controller
+                                                      .changeColorIndex(index);
+                                                }),
+                                                Visibility(
+                                                    visible: index ==
+                                                        controller
+                                                            .colorIndex.value,
+                                                    child: const Icon(
+                                                      Icons.done,
+                                                      color: Colors.white,
+                                                    ))
+                                              ],
+                                            )),
+                                  ),
+                                ],
+                              ).box.padding(const EdgeInsets.all(8)).make(),
+                              //quantity row
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 100,
+                                    child: "Quantity:"
                                         .text
-                                        .color(textfieldGrey)
+                                        .color(darkFontGrey)
                                         .make(),
-                                  ],
-                                ),
-                              ],
-                            ).box.padding(const EdgeInsets.all(8)).make(),
-                            //total row
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 100,
-                                  child:
-                                      "Total:".text.color(textfieldGrey).make(),
-                                ),
-                                "\$0.00"
-                                    .text
-                                    .color(bermudaGrey)
-                                    .size(16)
-                                    .fontFamily(fontBold)
-                                    .make(),
-                              ],
-                            ).box.padding(const EdgeInsets.all(8)).make(),
-                          ],
-                        ).box.white.shadowSm.make(),
+                                  ),
+                                  Obx(
+                                    () => Row(
+                                      children: [
+                                        IconButton(
+                                            onPressed: () {
+                                               controller.decreaseQuantity();
+                                               controller.calculateTotalPrice(int.parse(data['p_price']));
+                                            },
+                                            icon: const Icon(Icons.remove)),
+                                        controller.quantity.value.text
+                                            .size(16)
+                                            .color(darkFontGrey)
+                                            .fontFamily(fontBold)
+                                            .make(),
+                                        IconButton(
+                                            onPressed: () {
+                                               controller.increaseQuantity(int.parse(data['p_quantity']));
+                                               controller.calculateTotalPrice(int.parse(data['p_price']));
+                                              //controller.increaseQuantity();
+                                            },
+                                            icon: const Icon(Icons.add)),
+                                        10.widthBox,
+                                        "(${data['p_quantity']} available)"
+                                            .text
+                                            .color(textfieldGrey)
+                                            .make(),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ).box.padding(const EdgeInsets.all(8)).make(),
+                              //total row
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 100,
+                                    child: "Total:"
+                                        .text
+                                        .color(darkFontGrey)
+                                        .make(),
+                                  ),
+                                   "${controller.totalPrice.value}".numCurrency
+                                      .text
+                                      .color(bermudaGrey)
+                                      .size(16)
+                                      .fontFamily(fontBold)
+                                      .make(),
+                                ],
+                              ).box.padding(const EdgeInsets.all(8)).make(),
+                            ],
+                          ).box.white.shadowSm.make(),
+                        ),
 
                         //description section
                         10.heightBox,
@@ -193,10 +233,7 @@ class ItemDetails extends StatelessWidget {
                             .fontFamily(semibold)
                             .make(),
                         10.heightBox,
-                        "this is a dummy item and dummy description here..."
-                            .text
-                            .color(darkFontGrey)
-                            .make(),
+                        "${data['p_desc']}".text.color(darkFontGrey).make(),
                         //buttons section
                         10.heightBox,
                         ListView(
@@ -215,12 +252,15 @@ class ItemDetails extends StatelessWidget {
                         ),
                         20.heightBox,
                         //product may like section
-                         productsyoumaylike.text.fontFamily(fontBold).size(16).color(darkFontGrey).make(),
-                         10.heightBox,
+                        productsyoumaylike.text
+                            .fontFamily(fontBold)
+                            .size(16)
+                            .color(darkFontGrey)
+                            .make(),
+                        10.heightBox,
 
-
-                         //copied this widget from home screen featured products
-                         SingleChildScrollView(
+                        //copied this widget from home screen featured products
+                        SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: List.generate(

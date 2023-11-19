@@ -113,31 +113,46 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                 // Check if the fields exist before trying to access them
                                 var docData =
                                     data[index].data() as Map<String, dynamic>;
-                                var imgUrl = docData.containsKey('p_imgs')
-                                    ? docData['p_imgs'][0]
-                                    : 'default_img_url';
-                                var productName = docData.containsKey('p_name')
-                                    ? docData['p_name']
-                                    : 'default_name';
-                                var productPrice = docData
-                                        .containsKey('p_price')
-                                    ? docData['details']['p_price'].toString()
-                                    : 'default_price';
-                                if (productPrice == 'default_price') {
-                                  print(
-                                      'Warning: p_price is not present or is null.');
+                                // var imgUrl = docData.containsKey('p_imgs')
+                                //     ? docData['p_imgs'][0]
+                                //     : 'default_img_url';
+                                // var productName = docData.containsKey('p_name')
+                                //     ? docData['p_name']
+                                //     : 'default_name';
+                                // var productPrice =
+                                //     docData.containsKey('p_price')
+                                //         ? docData['p_price'].toString()
+                                //         : 'default_price';
+
+                                var productPrice = docData['p_price'];
+
+// Check if productPrice is null or not present
+                                if (productPrice == null) {
+                                  print('Warning: p_price is null.');
+                                  productPrice = 'default_price';
+                                } else {
+                                  productPrice = productPrice.toString();
                                 }
 
-                                print("productName: $productName");
-                                print("productPrice: $productPrice");
-                                print("docData: $docData");
+                                print("final productPrice: $productPrice");
+                                print(
+                                    "docData['p_price'] runtime type: ${docData['p_price'].runtimeType}");
+
+                                // if (productPrice == 'default_price') {
+                                //   print(
+                                //       'Warning: p_price is not present or is null.');
+                                // }
+
+                                // print("productName: $productName");
+                                // print("productPrice: $productPrice");
+                                // print("docData: $docData");
 
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Image.network(
-                                      imgUrl,
-                                      // data[index]['p_imgs'][0],
+                                      // imgUrl,
+                                      data[index]['p_imgs'][0],
                                       height: 150,
                                       width: 200,
                                       fit: BoxFit.cover,
@@ -146,7 +161,9 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                     5.heightBox, //.box.roundedSM.clip(Clip.antiAlias).make(),
                                     // "${data[index]['p_name']}"
                                     Text(
-                                      productName,
+                                      "${data[index]['p_name']}",
+
+                                      // productName,
                                       style: const TextStyle(
                                           fontFamily: semibold,
                                           color: darkFontGrey),
