@@ -1,3 +1,4 @@
+import 'package:ecommerce_app_with_firebase/common_widgets/exit_dialog.dart';
 import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/images.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
@@ -48,26 +49,37 @@ class Home extends StatelessWidget {
       const CartScreen(),
       const ProfileScreen(),
     ];
-    return Scaffold(
-      //to show the content as selected index
-      body: Column(
-        children: [
-          Obx(() => Expanded(
-                child: navBody.elementAt(controller.currentNavIndex.value),
-              )),
-        ],
-      ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          currentIndex: controller.currentNavIndex.value,
-          selectedItemColor: bermudaGrey,
-          selectedLabelStyle: const TextStyle(fontFamily: semibold),
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: whiteColor,
-          items: navbarItem,
-          onTap: (value) {
-            controller.currentNavIndex.value = value;
-          },
+    //willpopscope is used so that when we press the back botton the it asks if we want to exit our application
+    return WillPopScope(
+      onWillPop: () async {
+        showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => exitDialog(context));
+        return false;
+      },
+      child: Scaffold(
+        
+        //to show the content as selected index
+        body: Column(
+          children: [
+            Obx(() => Expanded(
+                  child: navBody.elementAt(controller.currentNavIndex.value),
+                )),
+          ],
+        ),
+        bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+            currentIndex: controller.currentNavIndex.value,
+            selectedItemColor: bermudaGrey,
+            selectedLabelStyle: const TextStyle(fontFamily: semibold),
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: whiteColor,
+            items: navbarItem,
+            onTap: (value) {
+              controller.currentNavIndex.value = value;
+            },
+          ),
         ),
       ),
     );

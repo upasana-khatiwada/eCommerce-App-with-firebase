@@ -177,8 +177,9 @@ class ItemDetails extends StatelessWidget {
                                       children: [
                                         IconButton(
                                             onPressed: () {
-                                               controller.decreaseQuantity();
-                                               controller.calculateTotalPrice(int.parse(data['p_price']));
+                                              controller.decreaseQuantity();
+                                              controller.calculateTotalPrice(
+                                                  int.parse(data['p_price']));
                                             },
                                             icon: const Icon(Icons.remove)),
                                         controller.quantity.value.text
@@ -188,8 +189,11 @@ class ItemDetails extends StatelessWidget {
                                             .make(),
                                         IconButton(
                                             onPressed: () {
-                                               controller.increaseQuantity(int.parse(data['p_quantity']));
-                                               controller.calculateTotalPrice(int.parse(data['p_price']));
+                                              controller.increaseQuantity(
+                                                  int.parse(
+                                                      data['p_quantity']));
+                                              controller.calculateTotalPrice(
+                                                  int.parse(data['p_price']));
                                               //controller.increaseQuantity();
                                             },
                                             icon: const Icon(Icons.add)),
@@ -213,7 +217,8 @@ class ItemDetails extends StatelessWidget {
                                         .color(darkFontGrey)
                                         .make(),
                                   ),
-                                   "${controller.totalPrice.value}".numCurrency
+                                  "${controller.totalPrice.value}"
+                                      .numCurrency
                                       .text
                                       .color(bermudaGrey)
                                       .size(16)
@@ -306,7 +311,18 @@ class ItemDetails extends StatelessWidget {
             height: 60,
             child: myButton(
               color: bermudaGrey,
-              onPress: () {},
+              onPress: () {
+                controller.addToCart(
+                    color: data['p_colors'][controller.colorIndex.value],
+                    context: context,
+                    vendorID: data['vendor_id'],
+                    img: data['p_imgs'][0],
+                    qty: controller.quantity.value,
+                    sellername: data['p_seller'],
+                    title: data['p_name'],
+                    tprice: controller.totalPrice.value);
+                VxToast.show(context, msg: "Added to cart");
+              },
               textColor: whiteColor,
               title: "Add to cart",
             ),

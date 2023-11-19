@@ -1,6 +1,8 @@
+import 'package:ecommerce_app_with_firebase/consts/firebase_consts.dart';
 import 'package:ecommerce_app_with_firebase/models/category_model.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class ProductController extends GetxController {
   var quantity = 0.obs;
@@ -38,5 +40,20 @@ class ProductController extends GetxController {
   }
    calculateTotalPrice(price){
     totalPrice.value = price * quantity.value;
+  }
+
+   addToCart({title, img, sellername, color, qty, tprice, context, vendorID}) async{
+    await firestore.collection(cartCollection).doc().set({
+      'title': title,
+      'img': img,
+      'sellername': sellername,
+      'color': color,
+      'qty': qty,
+      'vendor_id': vendorID,
+      'tprice': tprice,
+      'added_by': currentUser!.uid
+    }).catchError((error){
+      VxToast.show(context, msg: error.toString());
+    });
   }
 }

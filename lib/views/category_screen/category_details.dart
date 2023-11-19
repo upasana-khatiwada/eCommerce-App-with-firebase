@@ -133,6 +133,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                 } else {
                                   productPrice = productPrice.toString();
                                 }
+                                  print(Colors.white70.value);
 
                                 print("final productPrice: $productPrice");
                                 print(
@@ -145,7 +146,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
 
                                 // print("productName: $productName");
                                 // print("productPrice: $productPrice");
-                                // print("docData: $docData");
+                                print("docData: $docData");
 
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
