@@ -4,6 +4,7 @@ import 'package:ecommerce_app_with_firebase/consts/images.dart';
 import 'package:ecommerce_app_with_firebase/consts/lists.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
 import 'package:ecommerce_app_with_firebase/controllers/product_controller.dart';
+import 'package:ecommerce_app_with_firebase/views/chat_screen/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -17,7 +18,7 @@ class ItemDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.find<ProductController>();
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         controller.resetValues();
         return true;
       },
@@ -36,7 +37,15 @@ class ItemDetails extends StatelessWidget {
           actions: [
             IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
             IconButton(
-                onPressed: () {}, icon: const Icon(Icons.favorite_outline)),
+                onPressed: () {
+                  //if its already on fav
+                  if (controller.isFav.value) {
+                    controller.removeFromWishlist(data.id, context);
+                  } else {
+                    controller.addToWishlist(data.id, context);
+                  }
+                },
+                icon: const Icon(Icons.favorite_outline)),
           ],
         ),
         body: Column(
@@ -89,7 +98,7 @@ class ItemDetails extends StatelessWidget {
                               .color(bermudaGrey)
                               .make(),
                           10.heightBox,
-    
+
                           Row(
                             children: [
                               Expanded(
@@ -97,7 +106,11 @@ class ItemDetails extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  "Seller".text.black.fontFamily(semibold).make(),
+                                  "Seller"
+                                      .text
+                                      .black
+                                      .fontFamily(semibold)
+                                      .make(),
                                   5.heightBox,
                                   "${data['p_seller']}"
                                       .text
@@ -112,15 +125,24 @@ class ItemDetails extends StatelessWidget {
                                   Icons.message_rounded,
                                   color: darkFontGrey,
                                 ),
-                              ).onTap(() {})
+                              ).onTap(() {
+                                Get.to(
+                                  () => const ChatScreen(),
+                                  arguments: [
+                                    data['p_seller'],
+                                    data['vendor_id']
+                                  ],
+                                );
+                              })
                             ],
                           )
                               .box
                               .height(60)
-                              .padding(const EdgeInsets.symmetric(horizontal: 16))
+                              .padding(
+                                  const EdgeInsets.symmetric(horizontal: 16))
                               .color(textfieldGrey)
                               .make(),
-    
+
                           //Color Section
                           20.heightBox,
                           Obx(
@@ -153,8 +175,8 @@ class ItemDetails extends StatelessWidget {
                                                           horizontal: 4))
                                                       .make()
                                                       .onTap(() {
-                                                    controller
-                                                        .changeColorIndex(index);
+                                                    controller.changeColorIndex(
+                                                        index);
                                                   }),
                                                   Visibility(
                                                       visible: index ==
@@ -236,7 +258,7 @@ class ItemDetails extends StatelessWidget {
                               ],
                             ).box.white.shadowSm.make(),
                           ),
-    
+
                           //description section
                           10.heightBox,
                           "Description"
@@ -270,7 +292,7 @@ class ItemDetails extends StatelessWidget {
                               .color(darkFontGrey)
                               .make(),
                           10.heightBox,
-    
+
                           //copied this widget from home screen featured products
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
