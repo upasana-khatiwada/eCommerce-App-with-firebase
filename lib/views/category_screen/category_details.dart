@@ -197,7 +197,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                     .color(whiteColor)
                                     .make()
                                     .onTap(() {
-                                  // controller.checkIfFav(data[index]);
+                                   controller.checkIfFav(data[index]);
                                   Get.to(() => ItemDetails(
                                       title: "${data[index]['p_name']}",
                                       data: data[index]));

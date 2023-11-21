@@ -77,6 +77,13 @@ class ProductController extends GetxController {
     isFav(false);
     VxToast.show(context, msg: "Removed from favorite");
   }
+  checkIfFav(data) async {
+    if(data['p_wishlist'].contains(currentUser!.uid)) {
+      isFav(true);
+    }else {
+      isFav(false);
+    }
+  }
 
 
 }
