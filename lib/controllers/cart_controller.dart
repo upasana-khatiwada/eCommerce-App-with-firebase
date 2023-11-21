@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController{
@@ -9,4 +10,11 @@ class CartController extends GetxController{
       totalP.value = totalP.value + int.parse(data[i]['tprice'].toString());
     }
   }
+  // text controllers for shipping details
+
+  var addressController = TextEditingController();
+  var cityController = TextEditingController();
+  var stateController = TextEditingController();
+  var postalController = TextEditingController();
+  var phoneController = TextEditingController();
 }

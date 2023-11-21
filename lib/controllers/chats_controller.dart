@@ -47,7 +47,7 @@ class ChatsController extends GetxController {
               'sender_name': senderName
             }).then((value) {
               {
-                print('Document created with chatDocId: $chatDocId');
+                //print('Document created with chatDocId: $chatDocId');
 
                 chatDocId = value.id;
               }

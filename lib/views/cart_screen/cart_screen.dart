@@ -6,6 +6,7 @@ import 'package:ecommerce_app_with_firebase/consts/firebase_consts.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
 import 'package:ecommerce_app_with_firebase/controllers/cart_controller.dart';
 import 'package:ecommerce_app_with_firebase/services/firestore_services.dart';
+import 'package:ecommerce_app_with_firebase/views/cart_screen/shipping_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -15,10 +16,20 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var controller = Get.put(CartController());
     return Scaffold(
         backgroundColor: whiteColor,
+        bottomNavigationBar: SizedBox(
+          height: 60,
+          child: myButton(
+            color: bermudaGrey,
+            onPress: () {
+               Get.to(()=> const ShippingDetails());
+            },
+            textColor: whiteColor,
+            title: "Proceed to shipping",
+          ),
+        ),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: "Shopping cart"
@@ -56,12 +67,12 @@ class CartScreen extends StatelessWidget {
                                     width: 80,
                                     fit: BoxFit.cover,
                                   ),
-                                  
-                                  title: "${data[index]['title']}(x${data[index]['qty']})"
-                                      .text
-                                      .fontFamily(semibold)
-                                      .size(16)
-                                      .make(),
+                                  title:
+                                      "${data[index]['title']}(x${data[index]['qty']})"
+                                          .text
+                                          .fontFamily(semibold)
+                                          .size(16)
+                                          .make(),
                                   subtitle: "${data[index]['tprice']}"
                                       .numCurrency
                                       .text
@@ -72,7 +83,8 @@ class CartScreen extends StatelessWidget {
                                     Icons.delete,
                                     color: bermudaGrey,
                                   ).onTap(() {
-                                    FirestoreServices.deleteDocument(data[index].id);
+                                    FirestoreServices.deleteDocument(
+                                        data[index].id);
                                   }),
                                 );
                               })),
@@ -84,7 +96,8 @@ class CartScreen extends StatelessWidget {
                               .fontFamily(semibold)
                               .color(darkFontGrey)
                               .make(),
-                          Obx(()=>"${controller.totalP.value}"
+                          Obx(
+                            () => "${controller.totalP.value}"
                                 .numCurrency
                                 .text
                                 .fontFamily(fontBold)
@@ -100,15 +113,15 @@ class CartScreen extends StatelessWidget {
                           .roundedSM
                           .make(),
                       10.heightBox,
-                      SizedBox(
-                        width: context.screenWidth - 60,
-                        child: myButton(
-                          color: bermudaGrey,
-                          onPress: () {},
-                          textColor: whiteColor,
-                          title: "Proceed to shipping",
-                        ),
-                      )
+                      // SizedBox(
+                      //   width: context.screenWidth - 60,
+                      //   child: myButton(
+                      //     color: bermudaGrey,
+                      //     onPress: () {},
+                      //     textColor: whiteColor,
+                      //     title: "Proceed to shipping",
+                      //   ),
+                      // )
                     ],
                   ),
                 );
