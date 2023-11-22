@@ -59,3 +59,6 @@ const regular = "sans_regular";
 const semibold = "sans_semibold";
 const fontBold = "sans_bold";
 
+
+ //payment methods strings
+const paypal = "Paypal", stripe = "Stripe", cod = "Cash on delivery";
