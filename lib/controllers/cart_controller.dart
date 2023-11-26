@@ -24,15 +24,21 @@ class CartController extends GetxController {
 
   var paymentIndex = 0.obs;
   var products = [];
+  var vendors = []; //
+
+  var placingOrder = false.obs;
 
   changePaymentIndex(index) {
     paymentIndex.value = index;
   }
 
-  placeMyOrder({required orderPaymentMethod,required totalAmount}) async {
+  placeMyOrder({required orderPaymentMethod, required totalAmount}) async {
+    placingOrder(true);
 //first we get the product details before adding the orderscollection in the firestore
     await getProductDetails();
     await firestore.collection(ordersCollection).doc().set({
+      'order_code': "1234562",
+      'order_date': FieldValue.serverTimestamp(),
       'order_by': currentUser!.uid,
       'order_by_name': Get.find<HomeController>().username,
       'order_by_email': currentUser!.email,
@@ -44,12 +50,14 @@ class CartController extends GetxController {
       'shipping_method': "Home Delivery",
       'payment_method': orderPaymentMethod,
       'order_confirmed': false,
-      'order_delivered':false,
+      'order_delivered': false,
       'order_on_delivery': false,
       'order_placed': true,
       'total_amount': totalAmount,
       'orders': FieldValue.arrayUnion(products),
+      //'vendors': FieldValue.arrayUnion([vendors]),
     });
+    placingOrder(false);
   }
 
   //since every whislist has different id and its diffult to map every item in a single order list so we are going to map it as
@@ -65,6 +73,11 @@ class CartController extends GetxController {
         'title': productSnapshot[i]['title'],
       });
     }
-    print(products);
+  }
+
+  clearCart() {
+    for (var i = 0; i < productSnapshot.length; i++) {
+      firestore.collection(cartCollection).doc(productSnapshot[i].id).delete();
+    }
   }
 }

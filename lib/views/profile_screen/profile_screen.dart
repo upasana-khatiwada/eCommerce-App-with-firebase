@@ -9,8 +9,11 @@ import 'package:ecommerce_app_with_firebase/controllers/auth_controller.dart';
 import 'package:ecommerce_app_with_firebase/controllers/profile_controller.dart';
 import 'package:ecommerce_app_with_firebase/services/firestore_services.dart';
 import 'package:ecommerce_app_with_firebase/views/auth_screen/login_screen.dart';
+import 'package:ecommerce_app_with_firebase/views/chat_screen/messaging_screen.dart';
+import 'package:ecommerce_app_with_firebase/views/orders_screen/orders_screen.dart';
 import 'package:ecommerce_app_with_firebase/views/profile_screen/components/details_button.dart';
 import 'package:ecommerce_app_with_firebase/views/profile_screen/edit_profile_screen.dart';
+import 'package:ecommerce_app_with_firebase/views/wishlist_screen/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -60,7 +63,8 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   //users details section
                   Padding(
- padding: const EdgeInsets.only(left: 10,right: 10),                    child: Row(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Row(
                       children: [
                         data['imageUrl'] == ''
                             ? Image.asset(imgProfile2,
@@ -94,9 +98,10 @@ class ProfileScreen extends StatelessWidget {
                               side: const BorderSide(
                             color: whiteColor,
                           )),
-                          onPressed: () async{
-                              await Get.put(AuthController()).signoutMethod(context);
-                              Get.offAll(()=> const LoginScreen());
+                          onPressed: () async {
+                            await Get.put(AuthController())
+                                .signoutMethod(context);
+                            Get.offAll(() => const LoginScreen());
                           },
                           child: logout.text.fontFamily(semibold).white.make(),
                         )
@@ -139,6 +144,19 @@ class ProfileScreen extends StatelessWidget {
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
+                        onTap: () {
+                          switch (index) {
+                            case 0:
+                              Get.to(() => const OrdersScreen());
+                              break;
+                            case 1:
+                              Get.to(() => const WishlistScreen());
+                              break;
+                            case 2:
+                              Get.to(() => const MessagesScreen());
+                              break;
+                          }
+                        },
                         leading: Image.asset(
                           profileButtonsIcon[index],
                           width: 22,
