@@ -3,7 +3,9 @@ import 'package:ecommerce_app_with_firebase/common_widgets/loading_indicator.dar
 import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
 import 'package:ecommerce_app_with_firebase/services/firestore_services.dart';
+import 'package:ecommerce_app_with_firebase/views/orders_screen/orders_details.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class OrdersScreen extends StatelessWidget {
@@ -52,7 +54,9 @@ class OrdersScreen extends StatelessWidget {
                           .fontFamily(fontBold)
                           .make(),
                       trailing: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(()=> OrdersDetails(data:data[index]));
+                        },
                         icon: const Icon(
                           Icons.arrow_forward_ios_rounded,
                           color: darkFontGrey,
