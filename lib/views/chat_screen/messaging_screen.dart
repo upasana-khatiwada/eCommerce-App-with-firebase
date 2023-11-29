@@ -3,7 +3,9 @@ import 'package:ecommerce_app_with_firebase/common_widgets/loading_indicator.dar
 import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/strings.dart';
 import 'package:ecommerce_app_with_firebase/services/firestore_services.dart';
+import 'package:ecommerce_app_with_firebase/views/chat_screen/chat_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class MessagesScreen extends StatelessWidget {
@@ -28,7 +30,40 @@ class MessagesScreen extends StatelessWidget {
             } else if (snapshot.data!.docs.isEmpty) {
               return "No messages yet!".text.color(darkFontGrey).makeCentered();
             } else {
-              return Column();
+              var data = snapshot.data!.docs;
+              return Column(
+                children: [
+                  Expanded(
+                      child: ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (BuildContext context, index) {
+                            return Card(
+                              child: ListTile(
+                                onTap: () {
+                                  Get.to(() => const ChatScreen(), arguments: [
+                                    data[index]['friend_name'],
+                                    data[index]['toId'],
+                                  ]);
+                                },
+                                leading: const CircleAvatar(
+                                  backgroundColor: bermudaGrey,
+                                  child: Icon(
+                                    Icons.person,
+                                    color: whiteColor,
+                                  ),
+                                ),
+                                title: "${data[index]['friend_name']}"
+                                    .text
+                                    .fontFamily(semibold)
+                                    .color(darkFontGrey)
+                                    .make(),
+                                subtitle:
+                                    "${data[index]['last_msg']}".text.make(),
+                              ),
+                            );
+                          }))
+                ],
+              );
             }
           }),
     );

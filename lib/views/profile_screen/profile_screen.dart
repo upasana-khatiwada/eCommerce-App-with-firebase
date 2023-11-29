@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app_with_firebase/common_widgets/bg_widget.dart';
+import 'package:ecommerce_app_with_firebase/common_widgets/loading_indicator.dart';
 import 'package:ecommerce_app_with_firebase/consts/colors.dart';
 import 'package:ecommerce_app_with_firebase/consts/firebase_consts.dart';
 import 'package:ecommerce_app_with_firebase/consts/images.dart';
@@ -24,6 +25,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.put(ProfileController());
+    //FirestoreServices().getCounts();
     return bgWidget(
         child: Scaffold(
       //The snapshot in this context refers to the current state of the asynchronous stream of data that is being listened to.
@@ -109,34 +111,36 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   // 20.heightBox,
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            detailsCard(
-                                width: context.screenWidth / 3.3,
-                                count: data['cart_count'],
-                                title: "in your cart"),
-                            5.widthBox,
-                            detailsCard(
-                                width: context.screenWidth / 3,
-                                count: data['wishlist_count'],
-                                title: "in your wishlist"),
-                            5.widthBox,
-                            detailsCard(
-                                width: context.screenWidth / 3.3,
-                                count: data['order_count'],
-                                title: "your orders"),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  FutureBuilder(
+                      future: FirestoreServices.getCounts(),
+                      builder:
+                          (BuildContext context, AsyncSnapshot snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: loadingIndicator(),
+                          );
+                        } else {
+                          var countData = snapshot.data;
+                          return Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceEvenly,
+                            children: [
+                              detailsCard(
+                                  width: context.screenWidth / 3.3,
+                                  count: countData[0].toString(),
+                                  title: "in your cart"),
+                              detailsCard(
+                                  width: context.screenWidth / 3,
+                                  count: countData[1].toString(),
+                                  title: "in your wishlist"),
+                              detailsCard(
+                                  width: context.screenWidth / 3.3,
+                                  count: countData[2].toString(),
+                                  title: "your orders"),
+                            ],
+                          );
+                        }
+                      }),
 
                   //buttons section
 
